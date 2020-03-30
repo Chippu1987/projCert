@@ -1,0 +1,6 @@
+---
+- hosts: edurekaslave
+  become: true
+  become_user: root
+  roles:
+    - esolitos.chrome_headless
