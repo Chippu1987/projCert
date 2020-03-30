@@ -1,0 +1,60 @@
+
+Project Details:
+
+Git Hub URL:
+https://github.com/Chippu1987/projCert.git
+Note : Git hub contains Docker file,Ansible playbooks,Puppet scripts and modified PHP code which are used for reference.
+Pipepline can viewed from jenkins URL: http://ec2-52-55-29-51.compute-1.amazonaws.com:8080
+								  UserName: edureka
+								  Password: edureka
+
+Environment Details:
+Edureka Jenkins Server:
+	Public IP : 54.175.218.254 
+	Private IP: 172.31.86.202 
+	Private DNS: ip-172-31-86-202.ec2.internal
+	Public DNS: ec2-52-55-29-51.compute-1.amazonaws.com
+	Jenkins URL: http://ec2-52-55-29-51.compute-1.amazonaws.com:8080
+	UserName: edureka
+	Password: edureka
+
+Edureka Master:
+	Public IP :52.23.182.89
+	Private IP: 172.31.82.92 
+	Private DNS:ip-172-31-82-92.ec2.internal
+	Public DNS: ec2-54-175-218-254.compute-1.amazonaws.com
+	
+Edureka Slave:
+	Public IP : 52.55.29.51 
+	Private IP: 172.31.43.122 
+	Private DNS:: ip-172-31-43-122.ec2.internal
+	Public DNS: ec2-52-23-182-89.compute-1.amazonaws.com
+	
+PHP Application URL: 
+	http://ec2-52-23-182-89.compute-1.amazonaws.com/website/
+	http://52.55.29.51:80/website
+	
+	
+Pipeline Details:
+
+Pipeline 1: Edureka Project Pipeline
+	A.Project Job 0_Clean up SSL setup on Puppet Master_Slave - This Job will clean up Puppet Master and Slave SSL configs and make it ready for fresh puppet client setup.
+	B.Project Job 1_Install_Configure_PuppetAgent_on_Slave - This job will install Puppet client on slave and generate ssl cert on client.
+	C.Project Job 2_Sign the Puppet Client Certificate - This Job will sign the Puppet client cert.
+	D.Project Job 3_Install Docker on Slave using Puppet - This job will pull catalog from master and will install Docker on slave node.
+	E.Project Job 4_Build_DockerImage and run it - Once user commits code on Git and push to remote repository(Git hub).
+												 - This job will pull the php code through SCM Dockerfile from github(https://github.com/Chippu1987/projCert.git) and using publish artifiats via SSH publish copy the files to slave node.
+												 - Then it will build with name "phpimage:V$BUILD_NUMBER" and push it push to dockerhub. ex image name: phpimage:V8.
+												 - Then this job will create a container name "phpapp.V$BUILD_NUMBER" using the image phpimage:V$BUILD_NUMBER" and expose it port 80:80 and run it as deamon.
+												 - Then Application can be accessed using slave node DNS or Public IP.
+													App URLS:
+													 	http://ec2-52-23-182-89.compute-1.amazonaws.com/website/
+														http://52.55.29.51:80/website
+	
+	F.Project Job 5_Delete the Container - This job will clean up the container if previous job 4 is failed or unstable.
+
+Pipeline 2: Ansible_Pipeline_installation_Git_ChromeBrowser_ChromeDriver on test Server.
+	A.Project Ansible_Job1_Install Git on EdurekaSlave - This job will install Git on Edureka Slave node using ansible playbook.
+	B.Project Ansible_Job2_Install Chrome on EdurekaSlave - This job will install Chrome Browser along with its dependencies on Edureka Slave node using ansible playbook.
+	C.Project Ansible_Job2_Install ChromeDriver on EdurekaSlave - This job install chrome driver on Edureka Slave node.
+	
