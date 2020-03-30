@@ -12,7 +12,7 @@ RUN apt-get install -y php7.0 libapache2-mod-php7.0 php7.0-common php7.0-mbstrin
 
 #copy Application files
 RUN rm -rf /var/www/html/*
-ADD projCert /var/www/html
+ADD . /var/www/html
 
 #Configure Apache
 RUN chown -R www-data /var/www
