@@ -1,3 +1,2 @@
-<p>This is <b>home</b> Welcome to test project -- this content is in file -- content/home.php
-Feel free to edit it and check in git to test the CI/CD flow</p>
+<p>This is <b>home</b> Welcome to test project -- this content is in file -- content/home.php</p>
 </p>Edureka Project Pipeline:1.Install and configure puppet agent on the slave node (Job 1)2.Sign the puppet certificate on master using Jenkins (Job 2)3.Trigger the puppet agent on test server to install docker (Job 3)4.Pull the PHP website, Dockerfile and Selenium JAR from your git repo and build and deploy your PHP docker container. After this test the deployment using Selenium JAR file. (Job 4)5.If Job 4 fails, delete the running container on Test Server</p>
